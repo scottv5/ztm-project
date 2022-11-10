@@ -34,11 +34,11 @@ const SignUpForm = () => {
     const { email, password, confirmPassword } = formFields;
 
     if (password !== confirmPassword) return;
-    const res = await createAuthUserWithEmailAndPassword(email, password);
+    const user = await createAuthUserWithEmailAndPassword(email, password);
     setFormFields(() => ({ ...defaultFormFields }));
-    if (res) {
-      res.user.displayName = displayName;
-      await createUserDocumentFromAuth(res.user);
+    if (user) {
+      user.user.displayName = displayName;
+      await createUserDocumentFromAuth(user.user);
     }
   };
   return (
