@@ -1,28 +1,25 @@
-import { useEffect, useContext } from "react";
+import { useEffect } from "react";
 import {
   auth,
-  signInWithGooglePopup,
+  //signInWithGooglePopup,
   createUserDocumentFromAuth,
   signInWithGoogleRedirect,
 } from "../../utils/firebase/firebase.utils";
 import { getRedirectResult } from "firebase/auth";
 import SignUpForm from "../../components/sign-up-form/sign-up-form.component";
 import SignInForm from "../../components/sign-in-form/sign-in-form.component.jsx";
-import Button from "../../components/button/button.component";
-import "./sign-in.styles.scss";
-import { UserContext } from "../../contexts/user.context";
-
-// useEffect(async () => {
-//   const res = await getRedirectResult(auth);
-//   console.log(res);
-// }, []);
+import Button, {
+  BUTTON_TYPE_CLASSES,
+} from "../../components/button/button.component";
+import styled from "styled-components";
 
 const SignIn = () => {
   useEffect(() => {
     const getUserCred = async () => {
       const res = await getRedirectResult(auth);
       if (res) {
-        const userDocRef = await createUserDocumentFromAuth(res.user);
+        //const userDocRef =
+        await createUserDocumentFromAuth(res.user);
       }
     };
     getUserCred();
@@ -32,19 +29,29 @@ const SignIn = () => {
     await signInWithGoogleRedirect();
   };
   return (
-    <div className="sign-in-container-2">
-      <div className="sign-in-form-container">
+    <SignInContainer>
+      <FormContainer>
         <SignInForm />
-        <Button buttonType="google" onClick={logGoogleUser}>
+        <Button buttonType={BUTTON_TYPE_CLASSES.google} onClick={logGoogleUser}>
           Sign in with Google redirect
         </Button>
-      </div>
+      </FormContainer>
 
       <div>
         <SignUpForm />
       </div>
-    </div>
+    </SignInContainer>
   );
 };
+
+//styles
+const SignInContainer = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+`;
+const FormContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 export default SignIn;
