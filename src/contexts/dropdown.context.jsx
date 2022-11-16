@@ -4,7 +4,7 @@ const addCartItem = (cartItems, productToAdd) => {
   const found = cartItems.find(item => item.id === productToAdd.id);
   if (found) {
     return cartItems.map(obj => {
-      if (obj.id === found.id) return { ...obj, quanity: obj.quanity++ };
+      if (obj.id === found.id) return { ...obj, quanity: (obj.quanity += 1) };
       return obj;
     });
   }
@@ -15,7 +15,8 @@ const decrementCartItem = (cartItems, productToRemove) => {
   const found = cartItems.find(item => item.id === productToRemove.id);
   if (found.quanity > 1) {
     return cartItems.map(item => {
-      if (item.id === found.id) return { ...item, quanity: item.quanity-- };
+      if (item.id === found.id)
+        return { ...item, quanity: (item.quanity -= 1) };
       return item;
     });
   }
