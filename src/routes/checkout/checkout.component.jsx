@@ -1,6 +1,5 @@
 import CheckoutMenu from "../../components/checkout-menu/checkout-menu.component";
 import styled from "styled-components";
-
 const Checkout = () => {
   return (
     <CheckoutContainer>

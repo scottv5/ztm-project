@@ -1,22 +1,30 @@
-import { useContext } from "react";
-import { CartContext } from "../../contexts/dropdown.context";
+// import { useContext } from "react";
+// import { CartContext } from "../../contexts/dropdown.context";
 import { ReactComponent as ShoppingSvg } from "../../assets/shopping-bag.svg";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import {
+  selectIsCartOpen,
+  selectItemCount,
+} from "../../store/cart/cart.selector";
+import { isCartOpenToggle } from "../../store/cart/cart.action";
 
 const CartIcon = () => {
-  const { isOpen, setIsOpen, productsInCart } = useContext(CartContext);
+  const dispatch = useDispatch();
+  const isOpen = useSelector(selectIsCartOpen);
+  const itemCount = useSelector(selectItemCount);
+  //const { isOpen, setIsOpen, productsInCart } = useContext(CartContext);
+
   const toggleIsOpen = () => {
-    setIsOpen(() => !isOpen);
+    //setIsOpen(() => !isOpen);
+    dispatch(isCartOpenToggle(isOpen));
   };
-  const getTotalProductCount = () => {
-    return productsInCart.reduce((accu, curr) => {
-      return accu + curr.quanity;
-    }, 0);
-  };
+
   return (
     <IconContainer onClick={toggleIsOpen}>
       <ShoppingIcon />
-      <ItemCounter>{getTotalProductCount()}</ItemCounter>
+      <ItemCounter>{itemCount}</ItemCounter>
     </IconContainer>
   );
 };
